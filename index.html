@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Korean Beginner Mock Test - Student & Teacher (초급 한국어 모의고사)</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --success: #16a34a;
+      --danger: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      padding: 28px;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.55rem;
+      color: #111827;
+      text-align: center;
+    }
+
+    .guide-box {
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+      color: #1e3a8a;
+    }
+
+    .guide-box strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .guide-box ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--primary);
+    }
+
+    .set-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .set-card {
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fff;
+      text-align: left;
+    }
+
+    .set-card:hover {
+      border-color: var(--primary);
+      background: #f8fafc;
+    }
+
+    .set-card.selected {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .set-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary-dark);
+      margin-bottom: 4px;
+    }
+
+    .set-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 14px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--primary);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #4b5563;
+      margin-top: 16px;
+    }
+
+    .btn-secondary:hover {
+      background: #374151;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Sticky Quiz Header */
+    .quiz-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      background: #e0e7ff;
+      color: var(--primary-dark);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .progress-pill {
+      background: #f1f5f9;
+      color: #334155;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    /* Question Cards */
+    .section-banner {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      margin: 26px 0 14px;
+      color: #334155;
+      white-space: pre-line;
+    }
+
+    .passage-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      white-space: pre-line;
+      font-size: 0.98rem;
+    }
+
+    .passage-with-art { display: flex; align-items: center; gap: 18px; }
+    .passage-copy { flex: 1; min-width: 0; }
+    .passage-art { display: grid; gap: 8px; width: 34%; flex-shrink: 0; }
+    .passage-art svg { width: 100%; height: auto; display: block; }
+    @media (max-width: 520px) {
+      .passage-with-art { flex-direction: column; align-items: stretch; }
+      .passage-art { width: 100%; grid-template-columns: 1fr 1fr; }
+    }
+
+    .question-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+
+    .q-text {
+      font-weight: 600;
+      margin-bottom: 14px;
+      white-space: pre-line;
+      font-size: 1.02rem;
+    }
+
+    .q-text u {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 2px;
+      color: var(--primary-dark);
+    }
+
+    .illustration-box {
+      margin: 12px 0 16px;
+      padding: 12px;
+      background: #f9fafb;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 10px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 400;
+      margin: 0;
+      transition: all 0.15s;
+    }
+
+    .option-label:hover {
+      background: #f8fafc;
+      border-color: #93c5fd;
+    }
+
+    .option-label input[type="radio"] {
+      margin-right: 10px;
+      accent-color: var(--primary);
+      transform: scale(1.15);
+    }
+
+    /* Result Screen (Optimized for 1-screen mobile capture) */
+    .result-card {
+      text-align: center;
+      border: 3px solid var(--primary);
+      border-radius: 16px;
+      padding: 24px 20px;
+      background: #f8fafc;
+      margin-bottom: 20px;
+    }
+
+    .test-end-banner {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+
+    .student-meta {
+      font-size: 1.05rem;
+      color: #374151;
+      margin-bottom: 10px;
+    }
+
+    .score-display {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #111827;
+      margin: 10px 0;
+    }
+
+    .screenshot-guide {
+      background: #fef2f2;
+      border: 2px solid #fca5a5;
+      color: #991b1b;
+      padding: 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 14px;
+    }
+
+    .review-item {
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+
+    .tag-correct {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .tag-wrong {
+      color: var(--danger);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- START SCREEN -->
+  <div id="start-screen">
+    <h1>한국어 초급 모의고사<br><span style="font-size:1rem; font-weight:500; color:#6b7280;">Korean Beginner Practice Test</span></h1>
+
+    <div class="guide-box">
+      <strong>📋 Test Instructions (Guideline)</strong>
+      <ul>
+        <li>Enter your <strong>student number and full name</strong> below.</li>
+        <li>Select <strong>one of the 3 test sets</strong> assigned by your teacher (20 questions per set).</li>
+        <li>Answer all questions and click the <strong>Submit Test</strong> button at the bottom.</li>
+        <li>When the final score screen appears, <strong>take a screenshot</strong> and send it to your teacher.</li>
+      </ul>
+    </div>
+
+    <div class="form-group">
+      <label for="student-id">Student Number (학번)</label>
+      <input type="text" id="student-id" placeholder="Enter your student number" />
+    </div>
+
+    <div class="form-group">
+      <label for="student-name">Student Name (이름)</label>
+      <input type="text" id="student-name" placeholder="Enter your name here (e.g., Minho Kim / Sarah)" />
+    </div>
+
+    <div class="form-group">
+      <label>Select a Test Set (시험 세트 선택)</label>
+      <div class="set-grid">
+        <div class="set-card" onclick="selectSet(1, this)">
+          <div class="set-title">Set 1 (제1회)</div>
+          <div class="set-desc">위치와 길 찾기, 교통, 약속<br>(Locations, Directions &amp; Appointments)</div>
+        </div>
+        <div class="set-card" onclick="selectSet(2, this)">
+          <div class="set-title">Set 2 (제2회)</div>
+          <div class="set-desc">일상생활과 계획, 이유와 목적<br>(Daily Life, Plans &amp; Reasons)</div>
+        </div>
+        <div class="set-card" onclick="selectSet(3, this)">
+          <div class="set-title">Set 3 (제3회)</div>
+          <div class="set-desc">종합 실전 문제<br>(Comprehensive Practice)</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn" onclick="startTest()">Start Test (시험 시작)</button>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen" class="hidden">
+    <div class="quiz-header">
+      <div>
+        <span class="badge" id="display-set">Set 1</span>
+        <strong id="display-name" style="margin-left: 8px; font-size: 1.05rem;"></strong>
+      </div>
+      <div class="progress-pill" id="progress-text">
+        Answered: 0 / 20
+      </div>
+    </div>
+
+    <div id="questions-container"></div>
+
+    <button class="btn" onclick="submitTest()">Submit Test (제출하기)</button>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="result-screen" class="hidden">
+    <div class="result-card">
+      <div class="test-end-banner">시험 끝 (Test Completed!)</div>
+      <div class="student-meta">
+        Name: <strong id="res-name"></strong> &nbsp;|&nbsp;
+        Set: <strong id="res-set"></strong>
+      </div>
+      <div class="score-display" id="res-score">0 / 100</div>
+      <div id="res-detail" style="color: #4b5563; font-weight: 600;"></div>
+
+      <div id="save-status" class="screenshot-guide">시험 결과를 선생님에게 전송하고 있습니다...</div>
+    </div>
+
+    <details style="margin-top: 16px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px;">
+      <summary style="cursor: pointer; font-weight: 700; color: var(--primary-dark);">
+        Check Answer Review (정답 및 오답 확인하기)
+      </summary>
+      <div id="review-container" style="margin-top: 12px;"></div>
+    </details>
+
+    <button class="btn btn-secondary" onclick="resetTest()">Take Another Test (다른 세트 풀기)</button>
+  </div>
+
+  <!-- TEACHER DASHBOARD -->
+  <div id="teacher-screen" class="hidden">
+    <h1>교사용 성적 관리<br><span style="font-size:1rem;font-weight:500;color:#6b7280;">Teacher Dashboard</span></h1>
+    <div class="guide-box">학생들의 제출 결과와 문항별 정오답을 확인할 수 있습니다. 관리자 PIN을 입력하세요.</div>
+    <div class="form-group"><label for="admin-pin">관리자 PIN</label><input type="password" id="admin-pin" placeholder="Admin PIN"></div>
+    <button class="btn" onclick="loadTeacherResults()">성적 불러오기 (Load Results)</button>
+    <div id="teacher-error" style="color:#dc2626;margin-top:12px;"></div>
+    <div id="teacher-summary" style="margin-top:20px;"></div>
+    <div id="teacher-table-wrap" style="overflow-x:auto;margin-top:16px;"></div>
+    <button class="btn btn-secondary" onclick="openGradeSheet()">Google 스프레드시트 열기</button>
+  </div>
+</div>
+
+<script>
+  const PAGE_MODE = '<?= page ?>';
+  const ILLUSTRATIONS = {
+    jeonju: `<svg viewBox="0 0 240 135" role="img" aria-label="한옥마을 그림" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="135" rx="10" fill="#e5f2fa"/><circle cx="200" cy="23" r="13" fill="#f9cf6b"/><path d="M0 70L45 27 85 65 140 20 204 69 240 40V135H0Z" fill="#b6c9a6"/><path d="M0 105Q120 87 240 105V135H0Z" fill="#d9c8a6"/><g stroke="#6c4632" stroke-width="2"><path d="M15 70H110V108H15Z" fill="#f6e6c9"/><path d="M9 72Q35 56 62 38Q88 56 117 72Q63 65 9 72Z" fill="#334155"/><path d="M28 79H46V99H28ZM79 79H97V99H79Z" fill="#a5c4c8"/><path d="M54 77H72V108H54Z" fill="#9b6748"/><path d="M125 77H221V113H125Z" fill="#f6e6c9"/><path d="M118 79Q146 62 173 44Q198 64 229 79Q174 72 118 79Z" fill="#334155"/><path d="M137 86H156V104H137ZM190 86H209V104H190Z" fill="#a5c4c8"/><path d="M165 84H182V113H165Z" fill="#9b6748"/></g></svg>
+<svg viewBox="0 0 240 135" role="img" aria-label="비빔밥 그림" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="135" rx="10" fill="#f5e9d8"/><ellipse cx="120" cy="116" rx="78" ry="9" fill="#d5bda2"/><ellipse cx="120" cy="68" rx="83" ry="55" fill="#473c37"/><ellipse cx="120" cy="65" rx="73" ry="47" fill="#fff3d6"/><g stroke-linecap="round" stroke-width="6"><path d="M65 46l28 14m-24-25 30 15m-17-22 24 16" stroke="#e88135"/><path d="M133 35l17-9m-12 18 27-12m-19 22 27-10" stroke="#448354"/><path d="M65 80l30-8m-22 20 27-10m-10 20 18-13" stroke="#567d39"/><path d="M145 76l32 5m-34 5 28 9m-35 0 18 9" stroke="#9b623b"/></g><path d="M95 60Q90 46 110 44Q137 38 144 56Q157 76 137 85Q120 97 102 83Q85 77 95 60Z" fill="#fffdf3"/><circle cx="120" cy="65" r="14" fill="#f7b52c"/><path d="M153 61q12-9 25 0q-8 12-25 0" fill="#bc392b"/></svg>`,
+    crosswalk: `
+      <svg width="260" height="120" viewBox="0 0 260 120" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="35" width="260" height="50" fill="#64748b"/>
+        <rect x="115" y="38" width="30" height="6" fill="#fff"/>
+        <rect x="115" y="49" width="30" height="6" fill="#fff"/>
+        <rect x="115" y="60" width="30" height="6" fill="#fff"/>
+        <rect x="115" y="71" width="30" height="6" fill="#fff"/>
+        <rect x="95" y="4" width="70" height="26" rx="4" fill="#2563eb"/>
+        <text x="130" y="21" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">은행 (Bank)</text>
+        <circle cx="130" cy="100" r="8" fill="#f59e0b"/>
+        <text x="130" y="116" font-size="11" fill="#334155" text-anchor="middle">나 (Me)</text>
+        <path d="M130 90 L130 34" stroke="#ef4444" stroke-width="3" stroke-dasharray="4"/>
+        <polygon points="130,30 125,38 135,38" fill="#ef4444"/>
+      </svg>`,
+    distance5min: `
+      <svg width="280" height="100" viewBox="0 0 280 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="15" y="25" width="60" height="45" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+        <text x="45" y="52" font-size="13" fill="#92400e" text-anchor="middle" font-weight="bold">집</text>
+        <rect x="205" y="25" width="60" height="45" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="235" y="52" font-size="13" fill="#1e40af" text-anchor="middle" font-weight="bold">학교</text>
+        <line x1="82" y1="48" x2="198" y2="48" stroke="#16a34a" stroke-width="3" stroke-dasharray="5"/>
+        <rect x="105" y="20" width="70" height="22" rx="11" fill="#dcfce7"/>
+        <text x="140" y="35" font-size="12" fill="#166534" text-anchor="middle" font-weight="bold">걸어서 5분</text>
+      </svg>`,
+    transferSubway: `
+      <svg width="290" height="100" viewBox="0 0 290 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="30" width="85" height="40" rx="8" fill="#22c55e"/>
+        <text x="52" y="54" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">버스 (Bus)</text>
+        <path d="M102 50 L178 50" stroke="#ef4444" stroke-width="3"/>
+        <polygon points="184,50 175,45 175,55" fill="#ef4444"/>
+        <text x="142" y="38" font-size="11" fill="#dc2626" text-anchor="middle" font-weight="bold">서울역 환승</text>
+        <rect x="190" y="30" width="90" height="40" rx="8" fill="#1d4ed8"/>
+        <text x="235" y="54" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">지하철 1호선</text>
+      </svg>`,
+    bicyclePark: `
+      <svg width="240" height="100" viewBox="0 0 240 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="80" cy="68" r="18" fill="none" stroke="#2563eb" stroke-width="3"/>
+        <circle cx="160" cy="68" r="18" fill="none" stroke="#2563eb" stroke-width="3"/>
+        <polyline points="80,68 110,42 142,42 160,68" fill="none" stroke="#1e293b" stroke-width="3"/>
+        <line x1="110" y1="42" x2="122" y2="68" stroke="#1e293b" stroke-width="3"/>
+        <line x1="122" y1="68" x2="142" y2="42" stroke="#1e293b" stroke-width="3"/>
+        <line x1="102" y1="36" x2="118" y2="36" stroke="#dc2626" stroke-width="3"/>
+        <line x1="138" y1="32" x2="148" y2="32" stroke="#1e293b" stroke-width="3"/>
+      </svg>`,
+    museumClosed: `
+      <svg width="260" height="110" viewBox="0 0 260 110" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="130,10 65,38 195,38" fill="#94a3b8"/>
+        <rect x="75" y="38" width="110" height="55" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+        <rect x="115" y="55" width="30" height="38" fill="#475569"/>
+        <text x="130" y="78" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">휴관일</text>
+        <circle cx="42" cy="75" r="9" fill="#f59e0b"/>
+        <text x="42" y="98" font-size="11" fill="#1e293b" text-anchor="middle" font-weight="bold">구경 (여기!)</text>
+      </svg>`
+  };
+
+  const TEST_DATA = {
+    1: {
+      title: "제1회: 위치와 길 찾기, 교통, 약속",
+      questions: [
+        { section: "[1~4] (          )에 들어갈 가장 알맞은 단어를 고르세요.", num: 1, text: "가: 은행이 어디에 있어요?\n나: 저기 횡단보도를 건너세요. 길 (          )에 있어요.", img: "crosswalk", options: ["① 위", "② 아래", "③ 건너편", "④ 안"], answer: 2 },
+        { num: 2, text: "가: 집에서 학교까지 시간이 많이 걸려요?\n나: 아니요, 집에서 아주 (          ). 걸어서 5분쯤 걸려요.", img: "distance5min", options: ["① 멀어요", "② 가까워요", "③ 복잡해요", "④ 바빠요"], answer: 1 },
+        { num: 3, text: "가: 여기에서 시청까지 한 번에 가는 버스가 있어요?\n나: 아니요, 없어요. 서울역에서 지하철 1호선으로 (          ).", img: "transferSubway", options: ["① 내리세요", "② 건너세요", "③ 지나가세요", "④ 갈아타세요"], answer: 3 },
+        { num: 4, text: "가: 여보세요, 민수 씨? 저 지영이에요. (          )!\n나: 아, 지영 씨! 정말 반가워요. 잘 지냈어요?", options: ["① 어서 오세요", "② 오랜만이에요", "③ 실례합니다", "④ 죄송합니다"], answer: 1 },
+
+        { section: "[5~10] (          )에 들어갈 가장 알맞은 표현을 고르세요.", num: 5, text: "가: 오후에 같이 영화를 볼까요?\n나: 미안해요. 오늘 숙제가 많아서 집에 일찍 (          ).", options: ["① 가야 돼요", "② 갈 수 있어요", "③ 가러 가요", "④ 가지만"], answer: 0 },
+        { num: 6, text: "가: 도서관에 왜 가요?\n나: 내일 시험이 있어서 책을 (          ).", options: ["① 빌렸어요", "② 빌리러 가요", "③ 빌릴 수 없어요", "④ 빌리지만"], answer: 1 },
+        { num: 7, text: "가: 한국어 수업이 어때요?\n나: 조금 (          ) 아주 재미있어요.", options: ["① 어렵지만", "② 어려워서", "③ 어려우러", "④ 어려워야"], answer: 0 },
+        { num: 8, text: "가: 내일 제 생일 파티에 올 수 있어요?\n나: 미안해요. 내일은 아르바이트가 있어서 (          ).", options: ["① 갈 수 있어요", "② 갈 수 없어요", "③ 가야 돼요", "④ 가러 와요"], answer: 1 },
+        { num: 9, text: "가: 감기에 걸렸어요? 기침을 많이 하네요.\n나: 네, 머리가 아파서 약국에 약을 (          ).", options: ["① 사러 가요", "② 사야", "③ 사지만", "④ 샀지만"], answer: 0 },
+        { num: 10, text: "가: 서울에서 부산까지 KTX로 (          ) 걸려요?\n나: 2시간 50분쯤 걸려요.", options: ["① 어떻게", "② 어디에", "③ 얼마나", "④ 무슨"], answer: 2 },
+
+        { section: "[11~14] 밑줄 친 부분과 반대되는 뜻을 가진 것을 고르세요.", num: 11, text: "가: 제 문자를 <u>받았어요</u>?\n나: 아니요, 못 받았어요. 언제 (          )?", options: ["① 썼어요", "② 보냈어요", "③ 읽었어요", "④ 지웠어요"], answer: 1 },
+        { num: 12, text: "가: 여기서 <u>오른쪽</u>으로 가요?\n나: 아니요, (          )으로 가세요.", options: ["① 왼쪽", "② 이쪽", "③ 저쪽", "④ 건너편"], answer: 0 },
+        { num: 13, text: "가: 기차가 9시 20분에 <u>출발해요</u>?\n나: 네. 그리고 12시 15분에 부산에 (          ).", options: ["① 타요", "② 내려요", "③ 도착해요", "④ 건너요"], answer: 2 },
+        { num: 14, text: "가: 이 정류장에서 버스를 <u>타요</u>?\n나: 아니요, 여기에서 버스를 (          ).", options: ["① 걸어요", "② 내려요", "③ 건너요", "④ 돌아요"], answer: 1 },
+
+        { section: "[15~17] 다음 문장과 의미가 같은 것을 고르세요.", num: 15, text: "수업이 끝나고 친구를 만나러 카페에 갈 거예요.", options: ["① 친구하고 카페에서 수업을 들을 거예요.", "② 수업 후에 카페에서 친구를 만날 거예요.", "③ 카페에 갔지만 친구를 못 만났어요.", "④ 친구를 만나야 해서 카페에 못 가요."], answer: 1 },
+        { num: 16, text: "다리가 아파서 오늘 산에 갈 수 없어요.", options: ["① 다리가 아프지만 산에 갈 거예요.", "② 다리가 아파서 산에 가야 돼요.", "③ 다리가 아픈데 산에 가고 싶어요.", "④ 다리가 아파서 산에 못 가요."], answer: 3 },
+        { num: 17, text: "명동에서 강남까지 지하철을 타고 30분쯤 걸려요.", options: ["① 명동에서 강남까지 걸어서 30분 걸려요.", "② 강남에서 명동까지 버스로 30분 걸려요.", "③ 지하철로 명동에서 강남까지 30분 정도 걸려요.", "④ 명동역에서 강남역으로 지하철을 갈아타야 돼요."], answer: 2 },
+
+        { section: "[18~20] 다음 글을 읽고 질문에 답하세요.", passage: "수진 씨, 저 마크예요.\n오늘 저녁 6시에 하나 식당에서 만나기로 했지요?\n그런데 회사에 일이 많아서 조금 늦을 것 같아요.\n6시 30분까지 하나 식당으로 갈게요. 정말 미안해요.", num: 18, text: "마크 씨는 왜 메시지를 보냈어요?", options: ["① 식당 위치를 물어보려고", "② 약속 장소를 바꾸려고", "③ 약속 시간에 늦을 것 같아서 미리 알리려고", "④ 회사에 같이 가자고 하려고"], answer: 2 },
+        { num: 19, text: "두 사람은 어디에서 만날 거예요?", options: ["① 회사", "② 식당", "③ 학교", "④ 지하철역"], answer: 1 },
+        { num: 20, text: "글의 내용과 다른 것을 고르세요.", options: ["① 마크 씨는 회사 일이 많아요.", "② 두 사람은 6시에 만나기로 했어요.", "③ 마크 씨는 오늘 식당에 못 가요.", "④ 마크 씨는 6시 30분까지 식당에 갈 거예요."], answer: 2 }
+      ]
+    },
+
+    2: {
+      title: "제2회: 일상생활과 계획, 이유와 목적",
+      questions: [
+        { section: "[1~4] (          )에 들어갈 가장 알맞은 단어를 고르세요.", num: 1, text: "가: 주말에 보통 뭐 해요?\n나: 친구하고 공원에서 (          )을/를 타요.", img: "bicyclePark", options: ["① 수영", "② 자전거", "③ 농구", "④ 요가"], answer: 1 },
+        { num: 2, text: "가: 내일 여행 갈 준비 다 했어요?\n나: 네, 가방도 싸고 기차표도 다 (          ).", options: ["① 예매했어요", "② 운전했어요", "③ 도착했어요", "④ 걸렸어요"], answer: 0 },
+        { num: 3, text: "가: 박물관 안에 들어가도 돼요?\n나: 아니요, 오늘은 휴관일이라서 문이 닫혀 있어요. 건물 (          )에서만 구경하세요.", img: "museumClosed", options: ["① 안", "② 밖", "③ 위", "④ 옆"], answer: 1 },
+        { num: 4, text: "가: 고향에 있는 부모님하고 자주 연락해요?\n나: 네, 얼굴을 보고 싶어서 일주일에 두 번 (          )을/를 해요.", options: ["① 문자", "② 이메일", "③ 영상 통화", "④ 아르바이트"], answer: 2 },
+
+        { section: "[5~10] (          )에 들어갈 가장 알맞은 표현을 고르세요.", num: 5, text: "가: 이번 주말에 뭐 할 거예요?\n나: 날씨가 좋으면 한강 공원에 (          ).", options: ["① 놀러 갈 거예요", "② 놀아야 돼요", "③ 놀 수 없어요", "④ 놀지만"], answer: 0 },
+        { num: 6, text: "가: 냉장고에 우유가 없네요.\n나: 그래요? 그럼 슈퍼에 가서 우유를 (          ).", options: ["① 사러 와요", "② 사야 돼요", "③ 살 수 없어요", "④ 샀지만"], answer: 1 },
+        { num: 7, text: "가: 외국 사람인데 한국말을 정말 잘하네요!\n나: 고맙습니다. 한국어를 읽고 쓸 수 (          ) 말하기는 아직 어려워요.", options: ["① 있어서", "② 있지만", "③ 있으러", "④ 있어야"], answer: 1 },
+        { num: 8, text: "가: 어제 왜 파티에 안 왔어요?\n나: 머리가 너무 아파서 집에서 (          ).", options: ["① 쉬어야 했어요", "② 쉬러 갔어요", "③ 쉴 수 있었어요", "④ 쉬지만"], answer: 0 },
+        { num: 9, text: "가: 이 옷을 입어 봐도 돼요?\n나: 네, 저기 탈의실에 들어가서 (          ).", options: ["① 입어 보세요", "② 입으러 가요", "③ 입을 수 없어요", "④ 입지만"], answer: 0 },
+        { num: 10, text: "가: 백화점에 옷을 (          ) 가요?\n나: 네, 겨울 코트를 하나 사고 싶어요.", options: ["① 사러", "② 사야", "③ 살 수", "④ 사지만"], answer: 0 },
+
+        { section: "[11~14] 다음 중 틀린 것을 고르세요.", num: 11, text: "다음 중 문법이 틀린 것을 고르세요.", options: ["① 내일 일찍 일어나야 돼요.", "② 도서관에서 조용히 해야 해요.", "③ 지금 비가 와서 우산을 <u>쓰야 돼요</u>.", "④ 손이 더러워서 손을 씻어야 해요."], answer: 2 },
+        { num: 12, text: "다음 중 문맥이 어색한 것을 고르세요.", options: ["① 밥을 먹으러 식당에 가요.", "② 책을 읽으러 도서관에 가요.", "③ 잠을 자러 학교에 가요.", "④ 옷을 사러 백화점에 가요."], answer: 2 },
+        { num: 13, text: "다음 중 문법이 틀린 것을 고르세요.", options: ["① 저는 운전을 할 수 있어요.", "② 어제 배가 아파서 밥을 먹을 수 없었어요.", "③ 매운 음식을 잘 먹을 수 있어요.", "④ 내일 바빠서 친구를 <u>만나 수 없어요</u>."], answer: 3 },
+        { num: 14, text: "다음 중 문법이 틀린 것을 고르세요.", options: ["① 이 음식은 맵지만 맛있어요.", "② 방이 작지만 깨끗해요.", "③ 어제는 <u>바쁘으러</u> 오늘은 한가해요.", "④ 요가 수업은 힘들지만 재미있어요."], answer: 2 },
+
+        { section: "[15~17] <보기>와 같이 문장을 바르게 연결한 것을 고르세요.\n<보기> 한국에 오다 / 한국어를 배우다 ➔ 한국어를 배우러 한국에 왔어요.", num: 15, text: "공원에 가다 / 사진을 찍다", options: ["① 공원에 가러 사진을 찍어요.", "② 사진을 찍으러 공원에 가요.", "③ 사진을 찍어야 공원에 가요.", "④ 공원에 가지만 사진을 찍어요."], answer: 1 },
+        { num: 16, text: "피곤하다 / 숙제를 다 하다", options: ["① 피곤하지만 숙제를 다 했어요.", "② 피곤하러 숙제를 다 했어요.", "③ 피곤해야 숙제를 다 했어요.", "④ 피곤할 수 없어서 숙제를 다 했어요."], answer: 0 },
+        { num: 17, text: "시험이 있다 / 열심히 공부하다", options: ["① 시험이 있으러 열심히 공부해야 돼요.", "② 시험이 있어야 열심히 공부했어요.", "③ 시험이 있어서 열심히 공부해야 돼요.", "④ 시험이 있으려고 열심히 공부해야 돼요."], answer: 2 },
+
+        { section: "[18~20] 다음 안내문을 읽고 질문에 답하세요.", passage: "[전주 당일 여행 일정]\n• 09:00 서울역 출발 (KTX)\n• 11:00 전주역 도착\n• 12:00 점심 식사 (전주 비빔밥)\n• 14:00 한옥마을 구경 및 한복 체험\n• 17:00 전주역 출발\n• 19:00 서울역 도착", num: 18, text: "서울역에서 전주역까지 얼마나 걸려요?", options: ["① 1시간", "② 2시간", "③ 3시간", "④ 4시간"], answer: 1 },
+        { num: 19, text: "점심을 먹은 후에 무엇을 할 거예요?", options: ["① 기차를 탈 거예요.", "② 비빔밥을 먹을 거예요.", "③ 한옥마을을 구경할 거예요.", "④ 서울역에 도착할 거예요."], answer: 2 },
+        { num: 20, text: "안내문의 내용과 같은 것을 고르세요.", options: ["① 버스를 타고 전주에 갈 거예요.", "② 전주에 12시에 도착할 거예요.", "③ 오후 2시에 한복을 입어 볼 수 있어요.", "④ 저녁 7시에 전주역에서 출발할 거예요."], answer: 2 }
+      ]
+    },
+
+    3: {
+      title: "제3회: 종합 실전 문제",
+      questions: [
+        { section: "[1~5] (          )에 들어갈 가장 알맞은 것을 고르세요.", num: 1, text: "가: 실례합니다. 이 건물에 화장실이 어디에 있어요?\n나: 저기 엘리베이터 옆에서 (          )으로 가세요. 바로 보여요.", options: ["① 오른쪽", "② 아래", "③ 출발", "④ 도착"], answer: 0 },
+        { num: 2, text: "가: 전화번호가 몇 번이에요?\n나: 제 전화번호는 010-1234-5678(          ).", options: ["① 예요", "② 이에요", "③ 있어요", "④ 해요"], answer: 1 },
+        { num: 3, text: "가: 이번 방학에 고향에 돌아가요?\n나: 아니요, 시험이 있어서 (          ).", options: ["① 갈 수 있어요", "② 갈 수 없어요", "③ 가야 돼요", "④ 가러 가요"], answer: 1 },
+        { num: 4, text: "가: 오늘 저녁에 같이 식사할까요?\n나: 미안해요. 오늘 부모님께서 한국에 오셔서 공항에 마중 (          ).", options: ["① 나가야 돼요", "② 나갈 수 없어요", "③ 나갔어요", "④ 나가지만"], answer: 0 },
+        { num: 5, text: "가: 인사동에 사람이 많았어요?\n나: 네, 사람들이 아주 (          ) 길이 정말 복잡했어요.", options: ["① 많아서", "② 많지만", "③ 많으러", "④ 많아야"], answer: 0 },
+
+        { section: "[6~10] 대화가 자연스럽게 이어지도록 (          )에 알맞은 말을 고르세요.", num: 6, text: "가: 여보세요? 거기 언어교육원 사무실이지요?\n나: (          ). 무엇을 도와드릴까요?", options: ["① 네, 그렇습니다", "② 아니요, 안 계세요", "③ 네, 잘 지내요", "④ 아니요, 괜찮아요"], answer: 0 },
+        { num: 7, text: "가: 손님, 몇 분이세요?\n나: 두 명이에요. 창문 옆 자리가 있어요?\n가: 네, 있습니다. (          ).", options: ["① 이쪽에 앉으세요", "② 길을 건너세요", "③ 버스를 갈아타세요", "④ 전화를 받으세요"], answer: 0 },
+        { num: 8, text: "가: 수미 씨, 주말에 뭐 해요?\n나: 친구하고 같이 (          ).", options: ["① 영화를 보러 가요", "② 영화를 보러", "③ 영화를 보지만", "④ 영화를 봤지만"], answer: 0 },
+        { num: 9, text: "가: 지금 어디예요? 약속 시간이 다 됐어요.\n나: 죄송해요. (          ) 조금 늦을 것 같아요. 10분 후에 도착해요.", options: ["① 길이 막혀서", "② 일찍 일어나서", "③ 집이 가까워서", "④ 시간이 많아서"], answer: 0 },
+        { num: 10, text: "가: 제니 씨, 내일 생일 파티에 올 수 있어요?\n나: (          ). 꼭 갈게요!", options: ["① 네, 갈 수 있어요", "② 아니요, 못 가요", "③ 글쎄요, 잘 몰라요", "④ 미안하지만 약속이 있어요"], answer: 0 },
+
+        { section: "[11~14] 다음 (          )에 공통으로 들어갈 말을 고르세요.", num: 11, text: "• 횡단보도를 건너면 (          )에 은행이 있어요.\n• 길 (          )에 있는 편의점에서 물을 샀어요.", img: "crosswalk", options: ["① 건너편", "② 오른쪽", "③ 왼쪽", "④ 건물"], answer: 0 },
+        { num: 12, text: "• 부산까지 KTX로 세 시간쯤 (          ).\n• 집에서 학교까지 10분밖에 안 (          ).", options: ["① 와요", "② 가요", "③ 걸려요", "④ 타요"], answer: 2 },
+        { num: 13, text: "• 서울역에서 버스를 (          ).\n• 제주도에 갈 때 비행기를 (          ).", options: ["① 타요", "② 내려요", "③ 걸어요", "④ 운전해요"], answer: 0 },
+        { num: 14, text: "• 점심을 먹(          ) 식당에 가요.\n• 책을 읽(          ) 도서관에 가요.", options: ["① 으러", "② 어야", "③ 을 수", "④ 지만"], answer: 0 },
+
+        { section: "[15~17] 다음 글을 읽고 물음에 답하세요.", passage: "저는 몽골에서 온 바트입니다. 지금 청주에 있는 대학교에서 한국어를 공부하고 있습니다. 한국어 공부는 문법이 조금 어렵지만 아주 재미있습니다. 학교 기숙사에서 살기 때문에 교실까지 걸어서 5분쯤 걸립니다. 주말에는 보통 친구들과 축구를 하거나 한국 음식을 먹으러 식당에 갑니다. 방학에는 아르바이트를 해서 돈을 모으려고 합니다.", num: 15, text: "바트 씨는 지금 어디에 살아요?", options: ["① 몽골", "② 서울", "③ 기숙사", "④ 식당"], answer: 2 },
+        { num: 16, text: "바트 씨는 주말에 무엇을 해요?", options: ["① 아르바이트를 해요.", "② 한국어 문법을 공부해요.", "③ 친구들과 축구를 해요.", "④ 기숙사를 청소해요."], answer: 2 },
+        { num: 17, text: "글의 내용과 다른 것을 고르세요.", options: ["① 바트 씨는 몽골 사람입니다.", "② 바트 씨는 한국어 공부가 재미있다고 생각합니다.", "③ 기숙사에서 교실까지 버스를 타고 갑니다.", "④ 바트 씨는 방학에 아르바이트를 할 계획입니다."], answer: 2 },
+
+        { section: "[18~20] 다음 대화를 읽고 물음에 답하세요.", passage: "지훈: 에릭 씨, 내일 수업 끝나고 시간 있어요?\n에릭: 내일이요? 내일은 5시에 수업이 끝나지만 약속이 있어서 일찍 가야 돼요.\n지훈: 무슨 일이 있어요?\n에릭: 네, 고향에서 친한 친구가 내일 저녁 7시에 한국에 와요. 그래서 인천공항에 마중 나가야 해요.\n지훈: 아, 그렇군요. 그럼 다음 주에 같이 저녁 먹어요.\n에릭: 네, 좋아요. 다음 주에는 시간이 많아서 언제든지 만날 수 있어요.", num: 18, text: "에릭 씨는 내일 수업 후에 왜 일찍 가야 돼요?", options: ["① 숙제가 많아서", "② 몸이 아파서", "③ 공항에 친구를 마중 나가야 해서", "④ 고향에 돌아가야 해서"], answer: 2 },
+        { num: 19, text: "에릭 씨의 친구는 몇 시에 한국에 도착해요?", options: ["① 5시", "② 6시", "③ 7시", "④ 8시"], answer: 2 },
+        { num: 20, text: "대화의 내용과 같은 것을 고르세요.", options: ["① 지훈 씨와 에릭 씨는 내일 같이 저녁을 먹을 거예요.", "② 에릭 씨는 내일 5시까지 공항에 가야 돼요.", "③ 에릭 씨는 다음 주에도 시간이 없어요.", "④ 에릭 씨의 친구는 내일 한국에 올 거예요."], answer: 3 }
+      ]
+    }
+  };
+
+  let selectedSetId = null;
+  let studentName = "";
+  let studentId = "";
+  let lastResult = null;
+  let isTestInProgress = false;
+
+  if (PAGE_MODE === 'teacher') {
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('teacher-screen').classList.remove('hidden');
+  }
+
+  window.addEventListener('beforeunload', function (e) {
+    if (isTestInProgress) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+
+  function selectSet(id, element) {
+    selectedSetId = id;
+    document.querySelectorAll('.set-card').forEach(c => c.classList.remove('selected'));
+    element.classList.add('selected');
+  }
+
+  function updateProgress() {
+    const total = TEST_DATA[selectedSetId].questions.length;
+    const answered = document.querySelectorAll('#questions-container input[type="radio"]:checked').length;
+    document.getElementById('progress-text').textContent = `Answered: ${answered} / ${total}`;
+  }
+
+  function startTest() {
+    studentName = document.getElementById('student-name').value.trim();
+    studentId = document.getElementById('student-id').value.trim();
+    if (!studentId) {
+      alert("Please enter your student number. (학번을 입력해 주세요.)");
+      return;
+    }
+    if (!studentName) {
+      alert("Please enter your name first! (이름을 입력해 주세요.)");
+      return;
+    }
+    if (!selectedSetId) {
+      alert("Please select one of the 3 test sets! (시험 세트를 선택해 주세요.)");
+      return;
+    }
+
+    const data = TEST_DATA[selectedSetId];
+    document.getElementById('display-set').textContent = `Set ${selectedSetId}`;
+    document.getElementById('display-name').textContent = `${studentName}`;
+    document.getElementById('progress-text').textContent = `Answered: 0 / ${data.questions.length}`;
+
+    const container = document.getElementById('questions-container');
+    container.innerHTML = "";
+
+    data.questions.forEach((q, idx) => {
+      if (q.section) {
+        const secDiv = document.createElement('div');
+        secDiv.className = 'section-banner';
+        secDiv.textContent = q.section;
+        container.appendChild(secDiv);
+      }
+
+      if (q.passage) {
+        const passDiv = document.createElement('div');
+        passDiv.className = 'passage-box';
+        if (selectedSetId === 2 && q.num === 18) {
+          passDiv.classList.add('passage-with-art');
+          const copy = document.createElement('div');
+          copy.className = 'passage-copy';
+          copy.textContent = q.passage;
+          const art = document.createElement('div');
+          art.className = 'passage-art';
+          art.innerHTML = ILLUSTRATIONS.jeonju;
+          passDiv.append(copy, art);
+        } else {
+          passDiv.textContent = q.passage;
+        }
+        container.appendChild(passDiv);
+      }
+
+      const card = document.createElement('div');
+      card.className = 'question-card';
+
+      let imgHtml = "";
+      if (q.img && ILLUSTRATIONS[q.img]) {
+        imgHtml = `<div class="illustration-box">${ILLUSTRATIONS[q.img]}</div>`;
+      }
+
+      let optionsHtml = `<div class="options">`;
+      q.options.forEach((opt, optIdx) => {
+        optionsHtml += `
+          <label class="option-label">
+            <input type="radio" name="q_${idx}" value="${optIdx}" onchange="updateProgress()" />
+            <span>${opt}</span>
+          </label>
+        `;
+      });
+      optionsHtml += `</div>`;
+
+      card.innerHTML = `
+        <div class="q-text">${q.num}. ${q.text}</div>
+        ${imgHtml}
+        ${optionsHtml}
+      `;
+      container.appendChild(card);
+    });
+
+    isTestInProgress = true;
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('quiz-screen').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+
+  function submitTest() {
+    const questions = TEST_DATA[selectedSetId].questions;
+    let correctCount = 0;
+    let unanswered = [];
+
+    questions.forEach((q, idx) => {
+      const selected = document.querySelector(`input[name="q_${idx}"]:checked`);
+      if (!selected) {
+        unanswered.push(q.num);
+      } else if (parseInt(selected.value, 10) === q.answer) {
+        correctCount++;
+      }
+    });
+
+    if (unanswered.length > 0) {
+      const proceed = confirm(
+        `You haven't answered question(s): ${unanswered.join(', ')}.\nDo you still want to submit the test?\n(아직 풀지 않은 문제가 있습니다. 그래도 제출하시겠습니까?)`
+      );
+      if (!proceed) return;
+    }
+
+    isTestInProgress = false;
+    const totalScore = correctCount * 5;
+    document.getElementById('res-name').textContent = studentName;
+    document.getElementById('res-set').textContent = `Set ${selectedSetId}`;
+    document.getElementById('res-score').textContent = `${totalScore} / 100 pts`;
+    document.getElementById('res-detail').textContent = `Correct Answers: ${correctCount} out of ${questions.length}`;
+
+    const reviewContainer = document.getElementById('review-container');
+    reviewContainer.innerHTML = "";
+    questions.forEach((q, idx) => {
+      const selected = document.querySelector(`input[name="q_${idx}"]:checked`);
+      const userVal = selected ? parseInt(selected.value, 10) : -1;
+      const isCorrect = userVal === q.answer;
+
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      item.innerHTML = `
+        <div>
+          <strong>Q${q.num}.</strong>
+          <span class="${isCorrect ? 'tag-correct' : 'tag-wrong'}">
+            ${isCorrect ? '⭕ Correct' : '❌ Incorrect'}
+          </span>
+        </div>
+        <div style="font-size: 0.92rem; color: #374151; margin-top: 4px;">
+          Your answer: ${userVal >= 0 ? q.options[userVal] : '(No answer)'} &nbsp;|&nbsp;
+          Correct answer: <strong>${q.options[q.answer]}</strong>
+        </div>
+      `;
+      reviewContainer.appendChild(item);
+    });
+
+    const answerDetails = questions.map((q, idx) => {
+      const selected = document.querySelector(`input[name="q_${idx}"]:checked`);
+      const userVal = selected ? parseInt(selected.value, 10) : -1;
+      return { questionNo: q.num, selectedIndex: userVal, selectedText: userVal >= 0 ? q.options[userVal] : '(무응답)', correctIndex: q.answer, correctText: q.options[q.answer], isCorrect: userVal === q.answer };
+    });
+    lastResult = { studentId, studentName, setId: selectedSetId, score: totalScore, correctCount, totalQuestions: questions.length, answers: answerDetails, submittedAt: new Date().toISOString() };
+
+    document.getElementById('quiz-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.remove('hidden');
+    document.getElementById('save-status').textContent = '시험 결과를 저장하고 있습니다...';
+    if (window.google && google.script && google.script.run) {
+      google.script.run
+        .withSuccessHandler(function(res) {
+          document.getElementById('save-status').textContent = res && res.ok ? '제출 완료! 시험 결과가 선생님에게 전송되었습니다.' : '결과 저장에 실패했습니다. 선생님께 알려 주세요.';
+        })
+        .withFailureHandler(function(err) {
+          document.getElementById('save-status').textContent = '결과 전송에 실패했습니다. 인터넷 연결을 확인하고 선생님께 알려 주세요.';
+        })
+        .saveStudentResult(lastResult);
+    } else {
+      document.getElementById('save-status').textContent = '서버 연결이 없습니다. 배포된 시험 링크에서 다시 접속해 주세요.';
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function loadTeacherResults() {
+    const pin = document.getElementById('admin-pin').value.trim();
+    document.getElementById('teacher-error').textContent = '';
+    if (!pin) { document.getElementById('teacher-error').textContent = '관리자 PIN을 입력해 주세요.'; return; }
+    if (!(window.google && google.script && google.script.run)) { document.getElementById('teacher-error').textContent = 'Apps Script 배포 주소에서 접속해 주세요.'; return; }
+    document.getElementById('teacher-summary').textContent = '불러오는 중...';
+    google.script.run.withSuccessHandler(function(res) {
+      if (!res || !res.ok) {
+        document.getElementById('teacher-summary').textContent = '';
+        document.getElementById('teacher-error').textContent = 'PIN이 올바르지 않거나 결과를 불러오지 못했습니다.';
+        return;
+      }
+      window.teacherSheetUrl = res.sheetUrl;
+      const rows = res.results || [];
+      const avg = rows.length ? (rows.reduce((a, r) => a + Number(r.score || 0), 0) / rows.length).toFixed(1) : '0';
+      document.getElementById('teacher-summary').innerHTML = `<div class="guide-box"><strong>제출 인원: ${rows.length}명　|　평균 점수: ${avg}점</strong>세트별 제출 결과와 문항별 오답을 아래에서 확인하세요.</div>`;
+      let html = '<table style="width:100%;border-collapse:collapse;font-size:.9rem;"><thead><tr><th style="padding:8px;border-bottom:2px solid #ddd;">제출 시각</th><th style="padding:8px;border-bottom:2px solid #ddd;">학번</th><th style="padding:8px;border-bottom:2px solid #ddd;">이름</th><th style="padding:8px;border-bottom:2px solid #ddd;">세트</th><th style="padding:8px;border-bottom:2px solid #ddd;">점수</th><th style="padding:8px;border-bottom:2px solid #ddd;">오답</th></tr></thead><tbody>';
+      rows.slice().reverse().forEach(r => {
+        const wrong = (r.answers || []).filter(a => !a.isCorrect).map(a => `Q${escapeHtml(a.questionNo)}: ${escapeHtml(a.selectedText)} → ${escapeHtml(a.correctText)}`).join('<br>') || '없음';
+        html += `<tr><td style="padding:8px;border-bottom:1px solid #eee;white-space:nowrap;">${escapeHtml(r.submittedAt || '')}</td><td style="padding:8px;border-bottom:1px solid #eee;">${escapeHtml(r.studentId || '')}</td><td style="padding:8px;border-bottom:1px solid #eee;">${escapeHtml(r.studentName || '')}</td><td style="padding:8px;border-bottom:1px solid #eee;">${escapeHtml(String(r.setId || ''))}</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:700;">${Number(r.score || 0)}점</td><td style="padding:8px;border-bottom:1px solid #eee;">${wrong}</td></tr>`;
+      });
+      html += '</tbody></table>';
+      document.getElementById('teacher-table-wrap').innerHTML = html;
+    }).withFailureHandler(function(err) {
+      document.getElementById('teacher-summary').textContent = '';
+      document.getElementById('teacher-error').textContent = '오류: ' + (err && err.message ? err.message : err);
+    }).getTeacherResults(pin);
+  }
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+
+  function openGradeSheet() {
+    if (window.teacherSheetUrl) window.open(window.teacherSheetUrl, '_blank');
+    else alert('먼저 관리자 PIN으로 성적을 불러와 주세요.');
+  }
+
+  function resetTest() {
+    isTestInProgress = false;
+    location.reload();
+  }
+</script>
+
+</body>
+</html>
